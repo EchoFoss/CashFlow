@@ -1,5 +1,7 @@
 using CashFlow.Application.UseCase.Expense.Register;
 using CashFlow.Communication.Request;
+using CommonTestUtilities.Requests;
+using FluentAssertions;
 
 namespace Validators.Test.Expenses.Register;
 
@@ -10,16 +12,9 @@ public class RegisterExpenseValidatorTests
     {
         var validator = new RegisterExpenseValidator();
 
-        var req = new RegisterExpenseReq
-        {
-            Amount = 100,
-            Date = DateTime.Now,
-            Description = "description",
-            Title = "apple",
-            PaymentType = PaymentType.Cash,
-        };
+        var req = RequestRegisterExpenseJsonBuilder.New();
         
         var result = validator.Validate(req);
-        Assert.True(result.IsValid);
+        result.IsValid.Should().BeTrue();
     }
 }
